@@ -13,7 +13,6 @@ import (
 func main() {
 	config.ConnectDatabase()
 
-	// Realizar migrações
 	if err := config.DB.AutoMigrate(&models.User{}); err != nil {
 		log.Fatal("Erro ao migrar modelos:", err)
 	}
@@ -22,10 +21,8 @@ func main() {
 	}
 
 	app := fiber.New()
-
-	// Configurar CORS
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:5173", // URL do Vite
+		AllowOrigins: "http://localhost:5173",
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
