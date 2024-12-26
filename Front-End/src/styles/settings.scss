@@ -1,0 +1,32 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://vuetifyjs.com/features/sass-variables/`
+// @use 'vuetify/settings' with (
+//   $color-pack: false
+// );
+/* Importa o Vuetify */
+/* Adiciona o gradiente violeta */
+.v-border-rainbow {
+  border: 4px solid transparent;
+  border-image-source: linear-gradient(
+    90deg,
+    #8a2be2, /* Blue Violet */
+    #9400d3, /* Dark Violet */
+    #9932cc, /* Dark Orchid */
+    #ba55d3, /* Medium Orchid */
+    #e6e6fa, /* Lavender */
+    #dda0dd, /* Plum */
+    #dda0dd, /* Repetindo Plum para suavizar */
+    #ba55d3, /* Medium Orchid */
+    #9932cc, /* Dark Orchid */
+    #9400d3, /* Dark Violet */
+    #8a2be2  /* Blue Violet */
+  );
+  border-image-slice: 1;
+  border-image-width: 1;
+  background-clip: text;
+}
