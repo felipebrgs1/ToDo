@@ -6,12 +6,7 @@ export const useTask = defineStore('Task', {
     tasks: [] as Item[],
     selected: [] as number[],
     newTask: {} as Item,
-    lastId: 0,
-    filters: {
-      search: '',
-      priority: null as 'high' | 'medium' | 'low' | null,
-      status: null as 'pending' | 'in-progress' | 'completed' | null,
-    },
+    lastId: 0
   }),
   actions: {
     addTask(task: Item) {
@@ -66,33 +61,6 @@ export const useTask = defineStore('Task', {
   getters: {
     getTasks(): Item[] {
       return this.tasks.sort((a, b) => new Date(a.datetofinish).getTime() - new Date(b.datetofinish).getTime())
-    },
-    filteredTasks(): Item[] {
-      let filtered = [...this.tasks]
-
-      // Search filter
-      if (this.filters.search) {
-        const search = this.filters.search.toLowerCase()
-        filtered = filtered.filter(task =>
-          task.title.toLowerCase().includes(search) ||
-          task.text.toLowerCase().includes(search)
-        )
-      }
-
-      // Priority filter
-      if (this.filters.priority) {
-        filtered = filtered.filter(task => task.priority === this.filters.priority)
-      }
-
-      // Status filter
-      if (this.filters.status) {
-        filtered = filtered.filter(task => task.status === this.filters.status)
-      }
-
-      // Sort by due date
-      return filtered.sort((a, b) =>
-        new Date(a.datetofinish).getTime() - new Date(b.datetofinish).getTime()
-      )
     },
   },
 })

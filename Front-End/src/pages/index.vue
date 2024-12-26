@@ -2,16 +2,11 @@
   <v-container>
     <h1 class="text-center text-black">To Do List</h1>
 
-    <TaskFilters />
-
     <v-row>
       <v-col cols="12">
-        <template v-if="taskStore.filteredTasks.length">
-          <TransitionGroup name="list">
-            <Card v-for="task in taskStore.filteredTasks" :key="task.id" :data="task" class="my-3" @edit="editTask" />
-          </TransitionGroup>
+        <template v-for="task in taskStore.getTasks" :key="task.id">
+          <Card :data="task" class="my-3" @edit="editTask" />
         </template>
-        <EmptyState v-else @add="() => taskToEdit = null" />
       </v-col>
     </v-row>
 
@@ -45,17 +40,3 @@ onMounted(() => {
   taskStore.loadFromLocalStorage()
 })
 </script>
-
-<style scoped>
-.list-move,
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
-</style>
