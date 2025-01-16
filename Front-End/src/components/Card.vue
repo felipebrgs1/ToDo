@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="isLoading" class="mx-auto bg-white" variant="elevated" hover>
     <v-row no-gutters>
-      <v-col cols="11" @click="$emit('edit', data)">
+      <v-col cols="10" @click="handleEdit" @touchstart="handleEdit" class="cursor-pointer">
         <v-card-title class="d-flex align-center">
           {{ data.title }}
         </v-card-title>
@@ -16,16 +16,16 @@
           </v-chip>
         </v-card-actions>
       </v-col>
-      <v-col cols="1" class="d-flex justify-end align-center pr-4">
+      <v-col cols="2" class="d-flex justify-end align-center">
         <v-checkbox color="red" :model-value="taskStore.selected.includes(data.id)"
-          @update:model-value="taskStore.addSelected(data.id)" />
+          @update:model-value="taskStore.addSelected(data.id)" class="checkbox-touch" />
       </v-col>
     </v-row>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, onMounted, defineEmits, computed } from 'vue'
+import { defineProps, ref, computed } from 'vue'
 import type Item from '@/model/Item'
 import { useTask } from '@/stores/Task'
 
@@ -36,7 +36,6 @@ const props = defineProps({
   },
 })
 
-defineEmits(['edit'])
 const taskStore = useTask()
 const isLoading = ref(true)
 
@@ -45,8 +44,13 @@ const formattedDate = (date: string) => {
 }
 
 const isOverdue = computed(() => {
-  return new Date(props.data.datetofinish) < new Date()
+  return new Date(props.data.datetofinish) < new Date(props.data.date)
 })
+
+const handleEdit = (event: Event) => {
+  event.preventDefault()
+  taskStore.editTask(props.data)
+}
 
 onMounted(() => {
   isLoading.value = false
